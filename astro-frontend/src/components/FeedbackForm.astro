@@ -1,0 +1,160 @@
+---
+const API_URL =
+  "https://worker-api.devloperamrit.workers.dev";
+---
+
+<div class="form-card">
+
+  <form id="feedbackForm">
+
+    <input
+      type="text"
+      name="name"
+      placeholder="Your name (optional)"
+    />
+
+    <textarea
+      id="messageInput"
+      name="message"
+      maxlength="300"
+      placeholder="Write your feedback..."
+      required
+    ></textarea>
+
+    <div class="counter">
+      <span id="charCount">
+        0
+      </span>
+      / 300 characters
+    </div>
+
+    <button id="submitBtn">
+      Submit Feedback
+    </button>
+
+  </form>
+
+</div>
+
+<div
+  id="toast"
+  class="toast"
+  style="display:none;"
+>
+  Feedback submitted!
+</div>
+
+<script define:vars={{ API_URL }}>
+
+  const form =
+    document.getElementById(
+      "feedbackForm"
+    );
+
+  const textarea =
+    document.getElementById(
+      "messageInput"
+    );
+
+  const charCount =
+    document.getElementById(
+      "charCount"
+    );
+
+  const submitBtn =
+    document.getElementById(
+      "submitBtn"
+    );
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+  // Character counter
+  textarea.addEventListener(
+    "input",
+    () => {
+
+      charCount.textContent =
+        textarea.value.length;
+
+    }
+  );
+
+  // Submit form
+  form.addEventListener(
+    "submit",
+    async (e) => {
+
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+
+      submitBtn.textContent =
+        "Submitting...";
+
+      const formData =
+        new FormData(form);
+
+      const payload = {
+        name:
+          formData.get("name"),
+
+        message:
+          formData.get("message"),
+      };
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_URL}/api/submit`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                ),
+            }
+          );
+
+        if (response.ok) {
+
+          toast.style.display =
+            "block";
+
+          form.reset();
+
+          charCount.textContent =
+            "0";
+
+          // Reload after success
+          setTimeout(() => {
+
+            location.reload();
+
+          }, 1200);
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+      submitBtn.disabled = false;
+
+      submitBtn.textContent =
+        "Submit Feedback";
+    }
+  );
+
+</script>

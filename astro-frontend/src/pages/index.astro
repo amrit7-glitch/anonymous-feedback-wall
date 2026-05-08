@@ -1,0 +1,125 @@
+---
+import Layout
+  from "../layouts/Layout.astro";
+
+import FeedbackForm
+  from "../components/FeedbackForm.astro";
+
+import FeedbackList
+  from "../components/FeedbackList.astro";
+
+const API_URL =
+  "https://worker-api.devloperamrit.workers.dev";
+
+const response =
+  await fetch(
+    `${API_URL}/api/messages`
+  );
+
+const messages =
+  await response.json();
+---
+
+<Layout
+  title="Anonymous Feedback Wall"
+>
+
+  <div class="topbar">
+
+    <label class="theme-switch">
+
+      <input
+        type="checkbox"
+        id="themeToggle"
+      />
+
+      <span class="slider"></span>
+
+    </label>
+
+  </div>
+
+  <div class="hero">
+
+    <div class="logo">
+      💬
+    </div>
+
+    <h1 class="title">
+      Anonymous Feedback Wall
+    </h1>
+
+    <p class="subtitle">
+      Share your thoughts. Help us improve.
+    </p>
+
+  </div>
+
+  <div class="main-grid">
+
+    <div class="form-section">
+
+      <FeedbackForm />
+
+    </div>
+
+    <div class="feedback-column">
+
+      <FeedbackList
+        messages={messages}
+      />
+
+    </div>
+
+  </div>
+
+</Layout>
+
+<script>
+
+  const toggle =
+    document.getElementById(
+      "themeToggle"
+    );
+
+  // Sync toggle on load
+  if (
+    localStorage.getItem(
+      "theme"
+    ) === "dark"
+  ) {
+
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener(
+    "change",
+    () => {
+
+      document.documentElement.classList.toggle(
+        "dark"
+      );
+
+      if (
+        document.documentElement.classList.contains(
+          "dark"
+        )
+      ) {
+
+        localStorage.setItem(
+          "theme",
+          "dark"
+        );
+
+      } else {
+
+        localStorage.setItem(
+          "theme",
+          "light"
+        );
+      }
+
+    }
+  );
+
+</script>

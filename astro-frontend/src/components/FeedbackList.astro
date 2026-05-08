@@ -1,0 +1,32 @@
+---
+import MessageCard
+  from "./MessageCard.astro";
+
+const { messages } = Astro.props;
+---
+
+{
+  messages.length === 0 ? (
+
+    <div class="empty-state">
+
+      <h2>
+        No feedback yet
+      </h2>
+
+      <p>
+        Be the first one to post.
+      </p>
+
+    </div>
+
+  ) : (
+
+    messages.map((message) => (
+      <MessageCard
+        message={message}
+      />
+    ))
+
+  )
+}
