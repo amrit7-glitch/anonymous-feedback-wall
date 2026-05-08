@@ -44,15 +44,19 @@ export async function submitFeedback(
     getSupabase(env);
 
   // Insert into Supabase
-  const { error } =
-    await supabase
-      .from("feedbacks")
-      .insert([
-        {
-          name,
-          message,
-        },
-      ]);
+  const {
+    data: insertedMessage,
+    error,
+  } = await supabase
+    .from("feedbacks")
+    .insert([
+      {
+        name,
+        message,
+      },
+    ])
+    .select()
+    .single();
 
   if (error) {
 
@@ -95,6 +99,8 @@ export async function submitFeedback(
   return new Response(
     JSON.stringify({
       success: true,
+      message:
+        insertedMessage,
     }),
     {
       headers: {

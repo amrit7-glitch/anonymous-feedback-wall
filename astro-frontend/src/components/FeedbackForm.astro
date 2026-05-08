@@ -127,6 +127,12 @@ const API_URL =
 
         if (response.ok) {
 
+          const result =
+            await response.json();
+
+          const message =
+            result.message;
+
           toast.style.display =
             "block";
 
@@ -135,12 +141,74 @@ const API_URL =
           charCount.textContent =
             "0";
 
-          // Reload after success
+          const feedbackList =
+            document.getElementById(
+              "feedbackList"
+            );
+
+          // Remove empty state if exists
+          const emptyState =
+            feedbackList.querySelector(
+              ".empty-state"
+            );
+
+          if (emptyState) {
+
+            emptyState.remove();
+          }
+
+          const firstLetter =
+            (
+              message.name ||
+              "A"
+            )[0].toUpperCase();
+
+          const newMessage =
+            document.createElement(
+              "div"
+            );
+
+          newMessage.className =
+            "message-card";
+
+          newMessage.innerHTML = `
+            <div class="avatar">
+              ${firstLetter}
+            </div>
+
+            <div class="message-content">
+
+              <div class="message-header">
+
+                <div class="message-name">
+                  ${message.name}
+                </div>
+
+                <div class="message-date">
+                  ${new Date(
+                    message.created_at
+                  ).toLocaleString()}
+                </div>
+
+              </div>
+
+              <div class="message-text">
+                ${message.message}
+              </div>
+
+            </div>
+          `;
+
+          feedbackList.prepend(
+            newMessage
+          );
+
           setTimeout(() => {
 
-            location.reload();
+            toast.style.display =
+              "none";
 
-          }, 1200);
+          }, 2000);
 
         }
 
