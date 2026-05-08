@@ -63,7 +63,10 @@ const messages =
 
     </div>
 
-    <div class="feedback-column">
+    <div
+      class="feedback-column"
+      id="feedbackList"
+    >
 
       <FeedbackList
         messages={messages}
@@ -88,6 +91,10 @@ const messages =
       "theme"
     ) === "dark"
   ) {
+
+    document.documentElement.classList.add(
+      "dark"
+    );
 
     toggle.checked = true;
   }
