@@ -23,6 +23,7 @@ export async function submitFeedback(
     !message ||
     message.trim() === ""
   ) {
+
     return new Response(
       JSON.stringify({
         error:
@@ -30,7 +31,11 @@ export async function submitFeedback(
       }),
       {
         status: 400,
-        headers: corsHeaders,
+        headers: {
+          "Content-Type":
+            "application/json",
+          ...corsHeaders,
+        },
       }
     );
   }
@@ -38,7 +43,7 @@ export async function submitFeedback(
   const supabase =
     getSupabase(env);
 
-  // Insert
+  // Insert into Supabase
   const { error } =
     await supabase
       .from("feedbacks")
@@ -50,28 +55,38 @@ export async function submitFeedback(
       ]);
 
   if (error) {
+
     return new Response(
       JSON.stringify({
-        error: error.message,
+        error:
+          error.message,
       }),
       {
         status: 500,
-        headers: corsHeaders,
+        headers: {
+          "Content-Type":
+            "application/json",
+          ...corsHeaders,
+        },
       }
     );
   }
 
-  // Refresh cache
+  // Fetch latest messages
   const {
     data: latestMessages,
   } = await supabase
     .from("feedbacks")
     .select("*")
-    .order("created_at", {
-      ascending: false,
-    })
+    .order(
+      "created_at",
+      {
+        ascending: false,
+      }
+    )
     .limit(10);
 
+  // Update KV cache
   await setCachedMessages(
     env,
     latestMessages

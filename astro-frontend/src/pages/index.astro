@@ -9,7 +9,7 @@ import FeedbackList
   from "../components/FeedbackList.astro";
 
 const API_URL =
-  "https://worker-api.devloperamrit.workers.dev";
+  import.meta.env.PUBLIC_API_URL;
 
 const response =
   await fetch(
