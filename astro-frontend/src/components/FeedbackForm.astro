@@ -130,7 +130,21 @@ const API_URL =
           const result =
             await response.json();
 
-          const message =
+          console.log(
+            "API response:",
+            result
+          );
+
+          if (!result.message) {
+
+            console.error(
+              "No message returned from API"
+            );
+
+            return;
+          }
+
+          const feedback =
             result.message;
 
           toast.style.display =
@@ -146,7 +160,21 @@ const API_URL =
               "feedbackList"
             );
 
-          // Remove empty state if exists
+          console.log(
+            "feedbackList:",
+            feedbackList
+          );
+
+          if (!feedbackList) {
+
+            console.error(
+              "feedbackList container not found"
+            );
+
+            return;
+          }
+
+          // Remove empty state
           const emptyState =
             feedbackList.querySelector(
               ".empty-state"
@@ -159,7 +187,7 @@ const API_URL =
 
           const firstLetter =
             (
-              message.name ||
+              feedback.name ||
               "A"
             )[0].toUpperCase();
 
@@ -181,19 +209,19 @@ const API_URL =
               <div class="message-header">
 
                 <div class="message-name">
-                  ${message.name}
+                  ${feedback.name}
                 </div>
 
                 <div class="message-date">
                   ${new Date(
-                    message.created_at
+                    feedback.created_at
                   ).toLocaleString()}
                 </div>
 
               </div>
 
               <div class="message-text">
-                ${message.message}
+                ${feedback.message}
               </div>
 
             </div>
