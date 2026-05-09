@@ -1,5 +1,7 @@
 import { corsHeaders } from "../utils/cors";
+
 import { getSupabase } from "../services/supabase";
+
 import {
   getCachedMessages,
   setCachedMessages,
@@ -11,26 +13,34 @@ export async function getMessages(env) {
   const cached =
     await getCachedMessages(env);
 
-     
-
   if (cached) {
 
-//      console.log(
-//     "Serving from KV cache"
-//   );
+    const parsedCache =
+      JSON.parse(cached);
 
-    return new Response(cached, {
-      headers: {
-        "Content-Type":
-          "application/json",
-        ...corsHeaders,
-      },
-    });
+    const normalizedCache =
+      parsedCache.map((msg) => ({
+        ...msg,
+
+        created_at:
+          new Date(
+            msg.created_at
+          ).toISOString(),
+      }));
+
+    return new Response(
+      JSON.stringify(
+        normalizedCache
+      ),
+      {
+        headers: {
+          "Content-Type":
+            "application/json",
+          ...corsHeaders,
+        },
+      }
+    );
   }
-
-//    console.log(
-//     "Serving from KV cache"
-//   );
 
   const supabase =
     getSupabase(env);
@@ -40,15 +50,20 @@ export async function getMessages(env) {
     await supabase
       .from("feedbacks")
       .select("*")
-      .order("created_at", {
-        ascending: false,
-      })
+      .order(
+        "created_at",
+        {
+          ascending: false,
+        }
+      )
       .limit(10);
 
   if (error) {
+
     return new Response(
       JSON.stringify({
-        error: error.message,
+        error:
+          error.message,
       }),
       {
         status: 500,
@@ -57,14 +72,27 @@ export async function getMessages(env) {
     );
   }
 
-  // Save cache
+  // Normalize timestamps
+  const normalizedData =
+    data.map((msg) => ({
+      ...msg,
+
+      created_at:
+        new Date(
+          msg.created_at
+        ).toISOString(),
+    }));
+
+  // Save normalized cache
   await setCachedMessages(
     env,
-    data
+    normalizedData
   );
 
   return new Response(
-    JSON.stringify(data),
+    JSON.stringify(
+      normalizedData
+    ),
     {
       headers: {
         "Content-Type":
