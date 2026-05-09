@@ -6,6 +6,35 @@ const firstLetter =
     message.name ||
     "A"
   )[0].toUpperCase();
+
+const formattedDate =
+  new Date(
+    message.created_at
+  ).toLocaleString(
+    "en-IN",
+    {
+      timeZone:
+        "Asia/Kolkata",
+
+      day:
+        "numeric",
+
+      month:
+        "short",
+
+      year:
+        "numeric",
+
+      hour:
+        "numeric",
+
+      minute:
+        "2-digit",
+
+      hour12:
+        true,
+    }
+  );
 ---
 
 <div class="message-card">
@@ -23,11 +52,7 @@ const firstLetter =
       </div>
 
       <div class="message-date">
-        {
-          new Date(
-            message.created_at
-          ).toLocaleString()
-        }
+        {formattedDate}
       </div>
 
     </div>
