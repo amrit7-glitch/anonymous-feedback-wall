@@ -9,7 +9,7 @@ const firstLetter =
 
 const formattedDate =
   new Date(
-    message.created_at
+    message.created_at + "Z"
   ).toLocaleString(
     "en-IN",
     {
