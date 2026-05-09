@@ -125,15 +125,43 @@ const API_URL =
             }
           );
 
+        // Rate limit handling
+        if (
+          response.status === 429
+        ) {
+
+          const data =
+            await response.json();
+
+          toast.textContent =
+            data.error;
+
+          toast.style.display =
+            "block";
+
+          setTimeout(() => {
+
+            toast.style.display =
+              "none";
+
+            toast.textContent =
+              "Feedback submitted!";
+
+          }, 3000);
+
+          submitBtn.disabled =
+            false;
+
+          submitBtn.textContent =
+            "Submit Feedback";
+
+          return;
+        }
+
         if (response.ok) {
 
           const result =
             await response.json();
-
-          console.log(
-            "API response:",
-            result
-          );
 
           if (!result.message) {
 
@@ -147,6 +175,9 @@ const API_URL =
           const feedback =
             result.message;
 
+          toast.textContent =
+            "Feedback submitted!";
+
           toast.style.display =
             "block";
 
@@ -159,11 +190,6 @@ const API_URL =
             document.getElementById(
               "feedbackList"
             );
-
-          console.log(
-            "feedbackList:",
-            feedbackList
-          );
 
           if (!feedbackList) {
 
@@ -244,6 +270,21 @@ const API_URL =
 
         console.error(error);
 
+        toast.textContent =
+          "Something went wrong";
+
+        toast.style.display =
+          "block";
+
+        setTimeout(() => {
+
+          toast.style.display =
+            "none";
+
+          toast.textContent =
+            "Feedback submitted!";
+
+        }, 3000);
       }
 
       submitBtn.disabled = false;
