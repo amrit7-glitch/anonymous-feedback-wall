@@ -217,6 +217,35 @@ const API_URL =
               "A"
             )[0].toUpperCase();
 
+          const formattedDate =
+            new Date(
+              feedback.created_at
+            ).toLocaleString(
+              "en-IN",
+              {
+                timeZone:
+                  "Asia/Kolkata",
+
+                day:
+                  "numeric",
+
+                month:
+                  "short",
+
+                year:
+                  "numeric",
+
+                hour:
+                  "numeric",
+
+                minute:
+                  "2-digit",
+
+                hour12:
+                  true,
+              }
+            );
+
           const newMessage =
             document.createElement(
               "div"
@@ -239,9 +268,7 @@ const API_URL =
                 </div>
 
                 <div class="message-date">
-                  ${new Date(
-                    feedback.created_at
-                  ).toLocaleString()}
+                  ${formattedDate}
                 </div>
 
               </div>
