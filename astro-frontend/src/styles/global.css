@@ -1,4 +1,3 @@
-
 :root {
 
   --bg:
@@ -96,7 +95,7 @@ body{
 
   min-height:100vh;
 
-  padding:24px 32px 32px;
+  padding:8px 32px 24px;
 
   display:flex;
 
@@ -113,7 +112,7 @@ body{
 
   justify-content:flex-end;
 
-  margin-bottom:12px;
+  margin-bottom:2px;
 }
 
 /* Toggle */
@@ -192,7 +191,7 @@ html.dark .slider::before{
 
 .hero{
 
-  margin-bottom:28px;
+  margin-bottom:16px;
 
   flex-shrink:0;
 }
@@ -216,7 +215,7 @@ html.dark .slider::before{
 
   font-size:30px;
 
-  margin-bottom:22px;
+  margin-bottom:12px;
 
   box-shadow:var(--shadow);
 }
@@ -232,11 +231,11 @@ html.dark .logo{
 
   font-weight:800;
 
-  line-height:1;
+  line-height:0.95;
 
   letter-spacing:-3px;
 
-  margin-bottom:14px;
+  margin-bottom:6px;
 
   max-width:900px;
 }
@@ -254,8 +253,6 @@ html.dark .logo{
 
 .main-grid{
 
-  flex:1;
-
   display:grid;
 
   grid-template-columns:
@@ -264,7 +261,7 @@ html.dark .logo{
 
   gap:28px;
 
-  min-height:0;
+  align-items:start;
 }
 
 /* Left */
@@ -637,4 +634,3 @@ html.dark .toast{
     min-height:220px;
   }
 }
-
