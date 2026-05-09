@@ -1,5 +1,10 @@
+import {
+  checkRateLimit,
+} from "../middleware/rateLimit";
+
 import { corsHeaders } from "../utils/cors";
 import { getSupabase } from "../services/supabase";
+
 import {
   setCachedMessages,
 } from "../services/cache";
@@ -8,6 +13,31 @@ export async function submitFeedback(
   request,
   env
 ) {
+
+  // Rate limit check
+  const rateLimit =
+    await checkRateLimit(
+      request,
+      env
+    );
+
+  if (!rateLimit.allowed) {
+
+    return new Response(
+      JSON.stringify({
+        error:
+          "Too many requests. Please try again later.",
+      }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type":
+            "application/json",
+          ...corsHeaders,
+        },
+      }
+    );
+  }
 
   const body =
     await request.json();
