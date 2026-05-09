@@ -1,22 +1,24 @@
+
 :root {
 
   --bg:
-    linear-gradient(
-      135deg,
-      #f5efe6,
-      #ebe2d3
+    radial-gradient(
+      circle at top left,
+      #f7f3ec,
+      #efe7db 40%,
+      #e6dccf
     );
 
   --text:#111111;
 
   --card:
-    rgba(255,255,255,0.55);
+    rgba(255,255,255,0.58);
 
   --border:
-    rgba(0,0,0,0.08);
+    rgba(255,255,255,0.18);
 
   --input:
-    rgba(255,255,255,0.7);
+    rgba(255,255,255,0.72);
 
   --shadow:
     0 10px 40px rgba(0,0,0,0.08);
@@ -31,25 +33,26 @@
 html.dark {
 
   --bg:
-    linear-gradient(
-      135deg,
-      #0f0f0f,
-      #1b1b1b
+    radial-gradient(
+      circle at top left,
+      #161616,
+      #0f0f0f 40%,
+      #080808
     );
 
   --text:#f5f5f5;
 
   --card:
-    rgba(28,28,28,0.75);
+    rgba(24,24,24,0.72);
 
   --border:
-    rgba(255,255,255,0.08);
+    rgba(255,255,255,0.06);
 
   --input:
-    rgba(255,255,255,0.04);
+    rgba(255,255,255,0.03);
 
   --shadow:
-    0 10px 40px rgba(0,0,0,0.45);
+    0 12px 40px rgba(0,0,0,0.45);
 
   --button:#f3e6d2;
 
@@ -67,7 +70,7 @@ html.dark {
 html,
 body{
   width:100%;
-  height:100%;
+  min-height:100%;
 }
 
 body{
@@ -91,13 +94,15 @@ body{
 
   width:100%;
 
-  height:100vh;
+  min-height:100vh;
 
-  padding:30px;
+  padding:24px 32px 32px;
 
   display:flex;
 
   flex-direction:column;
+
+  justify-content:flex-start;
 }
 
 .topbar{
@@ -108,18 +113,18 @@ body{
 
   justify-content:flex-end;
 
-  margin-bottom:30px;
+  margin-bottom:12px;
 }
 
-/* Sliding Toggle */
+/* Toggle */
 
 .theme-switch{
 
   position:relative;
 
-  width:80px;
+  width:74px;
 
-  height:42px;
+  height:40px;
 }
 
 .theme-switch input{
@@ -139,6 +144,8 @@ body{
   cursor:pointer;
 
   transition:0.3s;
+
+  border:1px solid rgba(255,255,255,0.06);
 }
 
 html.dark .slider{
@@ -151,11 +158,11 @@ html.dark .slider{
 
   position:absolute;
 
-  width:34px;
-  height:34px;
+  width:32px;
+  height:32px;
 
   left:4px;
-  top:4px;
+  top:3px;
 
   border-radius:50%;
 
@@ -167,14 +174,14 @@ html.dark .slider{
 
   justify-content:center;
 
-  font-size:16px;
+  font-size:15px;
 
   transition:0.3s;
 }
 
 html.dark .slider::before{
 
-  transform:translateX(38px);
+  transform:translateX(34px);
 
   content:"☀️";
 
@@ -185,17 +192,17 @@ html.dark .slider::before{
 
 .hero{
 
-  margin-bottom:34px;
+  margin-bottom:28px;
 
   flex-shrink:0;
 }
 
 .logo{
 
-  width:80px;
-  height:80px;
+  width:72px;
+  height:72px;
 
-  border-radius:50%;
+  border-radius:24px;
 
   background:#111111;
 
@@ -207,9 +214,9 @@ html.dark .slider::before{
 
   justify-content:center;
 
-  font-size:32px;
+  font-size:30px;
 
-  margin-bottom:24px;
+  margin-bottom:22px;
 
   box-shadow:var(--shadow);
 }
@@ -221,22 +228,26 @@ html.dark .logo{
 
 .title{
 
-  font-size:64px;
+  font-size:72px;
 
   font-weight:800;
 
-  line-height:1.1;
+  line-height:1;
 
-  letter-spacing:-2px;
+  letter-spacing:-3px;
 
   margin-bottom:14px;
+
+  max-width:900px;
 }
 
 .subtitle{
 
-  font-size:20px;
+  font-size:22px;
 
   color:var(--muted);
+
+  max-width:600px;
 }
 
 /* Main Grid */
@@ -248,23 +259,19 @@ html.dark .logo{
   display:grid;
 
   grid-template-columns:
-    1fr
-    1fr;
+    0.95fr
+    1.05fr;
 
-  gap:32px;
+  gap:28px;
 
   min-height:0;
 }
 
-/* Left Form */
+/* Left */
 
 .form-section{
 
   height:100%;
-
-  position:sticky;
-
-  top:0;
 }
 
 /* Cards */
@@ -277,13 +284,11 @@ html.dark .logo{
 
   border:1px solid var(--border);
 
-  backdrop-filter:blur(18px);
+  backdrop-filter:blur(22px);
 
-  -webkit-backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(22px);
 
-  border-radius:28px;
-
-  padding:28px;
+  border-radius:32px;
 
   box-shadow:var(--shadow);
 }
@@ -293,6 +298,8 @@ html.dark .logo{
 .form-card{
 
   height:100%;
+
+  padding:30px;
 }
 
 input,
@@ -306,13 +313,13 @@ textarea{
 
   background:var(--input);
 
-  border:1px solid var(--border);
+  border:1px solid transparent;
 
   color:var(--text);
 
   padding:18px 20px;
 
-  border-radius:18px;
+  border-radius:20px;
 
   margin-top:16px;
 
@@ -321,12 +328,17 @@ textarea{
   transition:0.25s ease;
 }
 
+input::placeholder,
+textarea::placeholder{
+  color:var(--muted);
+}
+
 input:focus,
 textarea:focus{
 
-  transform:scale(1.01);
+  transform:translateY(-1px);
 
-  border-color:#111111;
+  border-color:#d6b98f;
 }
 
 html.dark input:focus,
@@ -337,7 +349,7 @@ html.dark textarea:focus{
 
 textarea{
 
-  min-height:260px;
+  min-height:280px;
 
   resize:none;
 
@@ -359,7 +371,7 @@ button{
 
   width:100%;
 
-  margin-top:24px;
+  margin-top:26px;
 
   border:none;
 
@@ -369,11 +381,11 @@ button{
 
   padding:18px;
 
-  border-radius:18px;
+  border-radius:20px;
 
   font-size:18px;
 
-  font-weight:600;
+  font-weight:700;
 
   cursor:pointer;
 
@@ -381,7 +393,10 @@ button{
 }
 
 button:hover{
+
   transform:translateY(-2px);
+
+  opacity:0.96;
 }
 
 button:disabled{
@@ -396,28 +411,22 @@ button:disabled{
 
   flex-direction:column;
 
-  gap:22px;
+  gap:18px;
 
   overflow-y:auto;
 
   height:100%;
 
-  padding-right:10px;
+  padding-right:8px;
 }
-
-/* Modern scrollbar */
 
 .feedback-column::-webkit-scrollbar{
-  width:8px;
-}
-
-.feedback-column::-webkit-scrollbar-track{
-  background:transparent;
+  width:6px;
 }
 
 .feedback-column::-webkit-scrollbar-thumb{
 
-  background:rgba(120,120,120,0.4);
+  background:rgba(140,140,140,0.25);
 
   border-radius:999px;
 }
@@ -430,19 +439,26 @@ button:disabled{
 
   align-items:flex-start;
 
-  flex-shrink:0;
+  padding:24px;
+
+  transition:0.25s ease;
+}
+
+.message-card:hover{
+
+  transform:translateY(-2px);
 }
 
 .avatar{
 
-  width:58px;
-  height:58px;
+  width:56px;
+  height:56px;
 
-  border-radius:50%;
+  border-radius:18px;
 
-  background:#eadcc5;
+  background:#e3c79d;
 
-  color:#5b4520;
+  color:#4a2f09;
 
   display:flex;
 
@@ -450,7 +466,7 @@ button:disabled{
 
   justify-content:center;
 
-  font-size:24px;
+  font-size:22px;
 
   font-weight:700;
 
@@ -459,7 +475,7 @@ button:disabled{
 
 html.dark .avatar{
 
-  background:#6e5330;
+  background:#6f5432;
 
   color:#fff2dd;
 }
@@ -474,7 +490,7 @@ html.dark .avatar{
 
   justify-content:space-between;
 
-  gap:20px;
+  gap:16px;
 
   margin-bottom:10px;
 }
@@ -488,9 +504,11 @@ html.dark .avatar{
 
 .message-date{
 
-  font-size:14px;
+  font-size:13px;
 
   color:var(--muted);
+
+  white-space:nowrap;
 }
 
 .message-text{
@@ -498,6 +516,10 @@ html.dark .avatar{
   line-height:1.8;
 
   font-size:16px;
+
+  color:var(--text);
+
+  opacity:0.92;
 }
 
 /* Toast */
@@ -540,7 +562,7 @@ html.dark .toast{
 
 .empty-state h2{
 
-  font-size:34px;
+  font-size:32px;
 
   margin-bottom:12px;
 }
@@ -561,7 +583,7 @@ html.dark .toast{
   }
 
   .container{
-    height:auto;
+    min-height:auto;
   }
 
   .main-grid{
@@ -571,7 +593,7 @@ html.dark .toast{
 
   .title{
 
-    font-size:48px;
+    font-size:52px;
   }
 
   .feedback-column{
@@ -580,33 +602,39 @@ html.dark .toast{
 
     height:auto;
   }
-
-  .form-section{
-
-    position:relative;
-  }
 }
 
 @media(max-width:640px){
 
   .container{
-    padding:20px;
+    padding:18px;
   }
 
   .title{
 
-    font-size:38px;
+    font-size:40px;
+
+    letter-spacing:-2px;
+  }
+
+  .subtitle{
+    font-size:18px;
   }
 
   .message-header{
 
     flex-direction:column;
 
-    gap:8px;
+    gap:6px;
   }
 
   .message-card{
 
     flex-direction:column;
   }
+
+  textarea{
+    min-height:220px;
+  }
 }
+
